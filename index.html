@@ -89,7 +89,7 @@ function multiLine(series,xs,max,unit,step=max/5){
 }
 function renderAllYearCharts(){
  const ys=Array.from({length:5},(_,i)=>111+i);
- $('allProportionCharts').innerHTML='<h3>111–115 年｜各等級比例折線圖</h3><p>每科同時呈現 A++、A+、A、B++、B+、B、C 七條線；各年度皆使用官方比例。</p><div class="charts">'+FIVE.map(s=>'<article><h3>'+s+'</h3>'+multiLine(BANDS.map(g=>({name:g,values:ys.map(y=>parseFloat(GRADES[y].proportions[s][g]))})),ys,35,'%',5)+'</article>').join('')+'</div>';
+ $('allProportionCharts').innerHTML='<h3>111–115 年｜各等級比例折線圖</h3><p>每科呈現 A 精熟、B 基礎、C 待加強三條線。A＝A++＋A+＋A；B＝B++＋B+＋B；合計依官方公布比例相加。</p><div class="charts">'+FIVE.map(s=>'<article><h3>'+s+'</h3>'+multiLine([['A 精熟',['A++','A+','A']],['B 基礎',['B++','B+','B']],['C 待加強',['C']]].map(([name,bands])=>({name,values:ys.map(y=>bands.reduce((sum,g)=>sum+Math.round(parseFloat(GRADES[y].proportions[s][g])*100),0)/100)})),ys,70,'%',5)+'</article>').join('')+'</div>';
  const ds=ys.map(y=>get(y,subject)),len=Math.max(...ds.map(d=>d.rows.length));
  $('allQuestionCharts').innerHTML='<h3>'+subject+'｜111–115 年逐題通過率疊圖</h3><p class="note">每條線代表一個年度，一次呈現所有年度。橫軸為各年題序；同題序不是同一道題，不能據此判定學生進退步。缺值及未施測不補零。</p>'+multiLine(ds.map(d=>({name:d.year+' 年'+(!d.rows.length?'（未列測驗）':''),values:Array.from({length:len},(_,i)=>d.rows[i]?.rate==null?null:d.rows[i].rate*100)})),Array.from({length:len},(_,i)=>i+1),100,'%');
 }
