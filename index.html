@@ -98,7 +98,7 @@ renderComparisons=function(){renderTwoYearComparisons();renderAllYearCharts()};
 
 
 function addBackTop(){
- document.querySelectorAll('section.panel,section.panel div.chart,#compareCutoffs,#compareProportions,#compareMeans,#compareQuestions,#compareSources').forEach(el=>{if(!Array.from(el.children).some(c=>c.classList.contains('back-top'))){const a=document.createElement('a');a.className='back-top';a.href='#pageTop';a.textContent='↑ 回最上面';el.appendChild(a)}});
+ document.querySelectorAll('section.panel').forEach(el=>{if(!Array.from(el.children).some(c=>c.classList.contains('back-top'))){const a=document.createElement('a');a.className='back-top';a.href='#pageTop';a.textContent='↑ 回最上面';el.appendChild(a)}});
 }
 const renderBeforeTop=render;render=function(){renderBeforeTop();addBackTop()};
 const comparisonsBeforeTop=renderComparisons;renderComparisons=function(){comparisonsBeforeTop();addBackTop()};
